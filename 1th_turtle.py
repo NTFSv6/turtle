@@ -38,7 +38,6 @@
 
 # # ? نستخدم exitonclick لكي يمكننا فتح الشاشه المستخدمه وعند الضغط عليها يتم قفلها
 # screen_obj.exitonclick()
-
 # >-----------------------------------------------------------------------------------------------------------------
 # import turtle as turtle_object
 # import random as random_object
@@ -202,34 +201,37 @@ Screen_object.setup(width=800, height=500)
 # B~ لوضع input علي الشاشه حين بداء البرنامج
 winner_color = Screen_object.textinput(
     title="Choose Color", prompt="ENter Winner Color")
+if winner_color in color_list:
+    
+    print(f"You Choose : ( {winner_color} ) Color ")
 
-print(f"You Choose : ( {winner_color} ) Color ")
+    for turtle_index in range(10):
 
-for turtle_index in range(10):
+        new_turtle = Turtle(shape="turtle")
+        new_turtle.left(90)
+        new_turtle.color(color_list[turtle_index])
+        new_turtle.penup()
+        new_turtle.goto(x=x_positions[turtle_index], y=-230)
+        turtle_list.append(new_turtle)
 
-    new_turtle = Turtle(shape="turtle")
-    new_turtle.left(90)
-    new_turtle.color(color_list[turtle_index])
-    new_turtle.penup()
-    new_turtle.goto(x=x_positions[turtle_index], y=-230)
-    turtle_list.append(new_turtle)
+    if winner_color:
+        flag = 1
 
-if winner_color:
-    flag = 1
+        while flag:
+            for turtle in turtle_list:
+                if turtle.ycor() > 230:
+                    flag = 0
+                    winning_color = turtle.pencolor()
 
-    while flag:
-        for turtle in turtle_list:
-            if turtle.ycor() > 230:
-                flag = 0
-                winning_color = turtle.pencolor()
+                    if winning_color == winner_color:
+                        print(
+                            f"You've Win!! , the {winning_color} turtle is the winner")
+                    else:
+                        print(f"You've Lost!! , the {winning_color} is the Winner")
 
-                if winning_color == winner_color:
-                    print(
-                        f"You've Win!! , the {winning_color} turtle is the winner")
-                else:
-                    print(f"You've Lost!! , the {winning_color} is the Winner")
+                random_dis = random.randint(0, 10)
+                turtle.forward(random_dis)
 
-            random_dis = random.randint(0, 10)
-            turtle.forward(random_dis)
-
-Screen_object.exitonclick()
+    Screen_object.exitonclick()
+else:
+    print(f"False .. Choose Any Color In {color_list} And Try Again")
